@@ -14,7 +14,7 @@ public class CartItem {
   public static CartItem of(Integer quantity, Item item) {
     if (quantity < 0 || quantity > 99)
       throw new InvalidQuantityException("Quantity must be a minimum of 0 and a maximum of 99");
-    return new CartItem(quantity, item);
+    return new CartItem(item, quantity);
   }
 
   @Id
@@ -25,7 +25,7 @@ public class CartItem {
 
   @ManyToOne @Setter Item item;
 
-  public CartItem(Integer quantity, Item item) {
+  public CartItem(Item item, Integer quantity) {
     this.quantity = quantity;
     this.item = item;
   }

@@ -5,6 +5,8 @@ import com.example.sauce.cart.CartService;
 import com.example.sauce.cartitem.CartItemService;
 import com.example.sauce.item.Item;
 import com.example.sauce.item.ItemService;
+import com.example.sauce.purchase.PurchaseService;
+import com.example.sauce.purchaseitem.PurchaseItemService;
 import java.util.List;
 import java.util.Random;
 import org.springframework.boot.CommandLineRunner;
@@ -15,11 +17,20 @@ public class Seeder implements CommandLineRunner {
   private final CartService cartService;
   private final ItemService itemService;
   private final CartItemService cartItemService;
+  private final PurchaseItemService purchaseItemService;
+  private final PurchaseService purchaseService;
 
-  public Seeder(CartService cartService, ItemService itemService, CartItemService cartItemService) {
+  public Seeder(
+      CartService cartService,
+      ItemService itemService,
+      CartItemService cartItemService,
+      PurchaseItemService purchaseItemService,
+      PurchaseService purchaseService) {
     this.cartService = cartService;
     this.itemService = itemService;
     this.cartItemService = cartItemService;
+    this.purchaseItemService = purchaseItemService;
+    this.purchaseService = purchaseService;
   }
 
   @Override
@@ -27,6 +38,8 @@ public class Seeder implements CommandLineRunner {
     seedItems();
     seedCartItems();
     seedCarts();
+    seedPurchaseItems();
+    seedPurchases();
   }
 
   private void seedItems() {
@@ -105,5 +118,21 @@ public class Seeder implements CommandLineRunner {
     for (int i = 0; i < 10; i++) {
       cartService.save(new Cart());
     }
+  }
+
+  private void seedPurchaseItems() {
+    if (!purchaseItemService.getAll().isEmpty()) return;
+
+    List<Item> items = itemService.getAll();
+    Random random = new Random();
+    for (Item item : items) {
+      purchaseItemService.save(random.nextInt(100), item.getId());
+    }
+  }
+
+  private void seedPurchases() {
+    if (!purchaseService.getAll().isEmpty()) return;
+
+    // 
   }
 }

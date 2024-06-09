@@ -1,10 +1,8 @@
 package com.example.sauce.cart;
 
 import com.example.sauce.cartitem.CartItem;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+
 import java.util.HashSet;
 import java.util.Set;
 import lombok.Getter;
@@ -15,7 +13,9 @@ import lombok.Setter;
 @Entity
 @NoArgsConstructor
 public class Cart {
-  @Id @GeneratedValue private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
   @OneToMany @Setter private Set<CartItem> cartItems = new HashSet<>();
 }
