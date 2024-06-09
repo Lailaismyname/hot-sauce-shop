@@ -2,10 +2,7 @@ package com.example.sauce.cart;
 
 import com.example.sauce.cartitem.CartItem;
 import jakarta.persistence.EntityNotFoundException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +48,15 @@ public class CartService {
             .collect(Collectors.toSet());
     cart.setCartItems(updatedCartItems);
     return cartRepository.save(cart);
+  }
+
+  public void checkout(Long id) {
+    Optional<Cart> optionalCart = cartRepository.findById(id);
+    if (optionalCart.isEmpty())
+      throw new EntityNotFoundException("Cart of id " + id + " can not be found");
+    Cart cart = optionalCart.get();
+    cart.setCartItems(new HashSet<>());
+    cartRepository.save(cart);
   }
 
   public void delete(Long id) {

@@ -52,6 +52,12 @@ public class CartController {
     return ResponseEntity.ok(updatedCart);
   }
 
+  @PutMapping("/checkout/{id}")
+  public ResponseEntity<Cart> checkout(@PathVariable Long id) {
+    cartService.checkout(id);
+    return ResponseEntity.ok().build();
+  }
+
   @DeleteMapping("/{id}")
   public ResponseEntity<Cart> delete(@PathVariable Long id) {
     cartService.delete(id);
