@@ -1,6 +1,6 @@
 package com.example.sauce.item;
 
-import com.example.sauce.ControllerRoutes;
+import com.example.sauce.routes.ControllerRoutes;
 import java.net.URI;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +45,7 @@ public class ItemController {
     return ResponseEntity.ok(updateItem);
   }
 
-  @DeleteMapping
+  @DeleteMapping("/{id}")
   public ResponseEntity<Item> delete(@PathVariable Long id) {
     itemService.delete(id);
     return ResponseEntity.ok().build();

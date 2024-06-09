@@ -1,6 +1,6 @@
 package com.example.sauce.cartitem;
 
-import com.example.sauce.ControllerRoutes;
+import com.example.sauce.routes.ControllerRoutes;
 import java.net.URI;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +29,7 @@ public class CartItemController {
 
   @PostMapping
   public ResponseEntity<CartItem> save(@RequestBody CartItemDTO cartItem) {
-    CartItem savedCartItem = cartItemService.save(cartItem.quantity(), cartItem.item());
+    CartItem savedCartItem = cartItemService.save(cartItem.quantity(), cartItem.id());
     URI location =
         ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/id/{id}")
@@ -40,11 +40,11 @@ public class CartItemController {
 
   @PutMapping
   public ResponseEntity<CartItem> update(@RequestBody CartItemDTO cartItem) {
-    CartItem updatedCartItem = cartItemService.save(cartItem.quantity(), cartItem.item());
+    CartItem updatedCartItem = cartItemService.update(cartItem.quantity(), cartItem.id());
     return ResponseEntity.ok(updatedCartItem);
   }
 
-  @DeleteMapping
+  @DeleteMapping("/{id}")
   public ResponseEntity<CartItem> delete(@PathVariable Long id) {
     cartItemService.delete(id);
     return ResponseEntity.ok().build();

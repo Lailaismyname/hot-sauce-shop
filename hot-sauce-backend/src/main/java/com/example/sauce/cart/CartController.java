@@ -1,6 +1,7 @@
 package com.example.sauce.cart;
 
-import com.example.sauce.ControllerRoutes;
+import com.example.sauce.cartitem.CartItem;
+import com.example.sauce.routes.ControllerRoutes;
 import java.net.URI;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -38,13 +39,20 @@ public class CartController {
     return ResponseEntity.created(location).body(savedCart);
   }
 
-  @PutMapping
-  public ResponseEntity<Cart> update(@RequestBody Cart cart) {
-    Cart updatedCart = cartService.update(cart);
+  @PutMapping("/add-to-cart/{id}")
+  public ResponseEntity<Cart> addItemToCart(@PathVariable Long id, @RequestBody CartItem cartItem) {
+    Cart updatedCart = cartService.addItemToCart(id, cartItem);
     return ResponseEntity.ok(updatedCart);
   }
 
-  @DeleteMapping
+  @PutMapping("/delete-from-cart/{id}")
+  public ResponseEntity<Cart> deleteItemFromCart(
+      @PathVariable Long id, @RequestBody Long cartItemId) {
+    Cart updatedCart = cartService.deleteItemFromCart(id, cartItemId);
+    return ResponseEntity.ok(updatedCart);
+  }
+
+  @DeleteMapping("/{id}")
   public ResponseEntity<Cart> delete(@PathVariable Long id) {
     cartService.delete(id);
     return ResponseEntity.ok().build();

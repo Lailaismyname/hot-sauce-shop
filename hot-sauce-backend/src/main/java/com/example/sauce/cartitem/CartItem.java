@@ -1,5 +1,6 @@
 package com.example.sauce.cartitem;
 
+import com.example.sauce.customExceptions.InvalidQuantityException;
 import com.example.sauce.item.Item;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -20,18 +21,12 @@ public class CartItem {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private Integer quantity;
+  @Setter private Integer quantity;
 
   @ManyToOne @Setter Item item;
 
   public CartItem(Integer quantity, Item item) {
     this.quantity = quantity;
     this.item = item;
-  }
-}
-
-class InvalidQuantityException extends RuntimeException {
-  public InvalidQuantityException(String message) {
-    super(message);
   }
 }

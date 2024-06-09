@@ -26,7 +26,7 @@ public class Seeder implements CommandLineRunner {
   public void run(String... args) throws Exception {
     seedItems();
     seedCartItems();
-    // seedCarts();
+    seedCarts();
   }
 
   private void seedItems() {
@@ -82,6 +82,11 @@ public class Seeder implements CommandLineRunner {
             "Smoky Bourbon",
             "A rich and smoky sauce with bourbon, molasses, and chipotle peppers.",
             14.99));
+    itemService.save(
+        new Item(
+            "Laila's super spice and everything nice",
+            "Very sweet and spicy hot sauce, the recipe has been a secret for age and will remain as such.",
+            127.99));
   }
 
   private void seedCartItems() {
@@ -90,7 +95,7 @@ public class Seeder implements CommandLineRunner {
     List<Item> items = itemService.getAll();
     Random random = new Random();
     for (Item item : items) {
-      cartItemService.save(random.nextInt(100), item);
+      cartItemService.save(random.nextInt(100), item.getId());
     }
   }
 

@@ -1,4 +1,4 @@
-package com.example.sauce;
+package com.example.sauce.routes;
 
 public class ControllerRoutes {
   private static final String BASE_ROUTE = "hot-sauce-shop/";
