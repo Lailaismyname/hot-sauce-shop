@@ -2,11 +2,6 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    colors: {
-      pepper: "#B22222",
-      jalapeno: "#3F612D",
-      base: "#FFFDED",
-    },
     extend: {
       fontFamily: {
         bebas: ["'Bebas Neue'", "sans-serif"],
@@ -17,6 +12,12 @@ export default {
       boxShadow: {
         "custom-shadow":
           "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+      },
+      colors: {
+        pepper: "#B22222",
+        "pepper-light": "#f5cbcb",
+        jalapeno: "#3F612D",
+        base: "#FFFDED",
       },
     },
   },

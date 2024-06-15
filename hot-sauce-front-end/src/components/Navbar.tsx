@@ -2,23 +2,15 @@ import { ShopName } from "./ShopName";
 import { useNavigate } from "react-router-dom";
 import { FaShoppingBasket } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
-import { useEffect } from "react";
 
 export const Navbar = () => {
-  // variables
-  const style = {
-    li: "content-center flex justify-center items-center cursor-pointer ",
-    icon: "flex justify-end items-center cursor-pointer",
-    iconSize: 30,
-  };
   const navigate = useNavigate();
-  // functions
-  // return element
+  const baseStyle = "cursor-pointer text-right flex items-center font-bold";
   return (
     <>
-      <ul className="bg-pepper p-3 shadow-custom-shadow grid grid-cols-8 gap-2">
+      <ul className="bg-pepper p-3 shadow-custom-shadow flex flex-row w-full">
         <li
-          className="grid-cols-subgrid col-span-4"
+          className={` basis-6/12`}
           onClick={() => {
             navigate("/");
           }}
@@ -26,7 +18,7 @@ export const Navbar = () => {
           <ShopName />
         </li>
         <li
-          className={style.li}
+          className={`${baseStyle} basis-2/12`}
           onClick={() => {
             navigate("/");
           }}
@@ -34,7 +26,7 @@ export const Navbar = () => {
           Home
         </li>
         <li
-          className={style.li}
+          className={`${baseStyle} basis-2/12`}
           onClick={() => {
             navigate("/catalogue");
           }}
@@ -42,20 +34,20 @@ export const Navbar = () => {
           Catalogue
         </li>
         <li
-          className={style.icon}
+          className={`${baseStyle} basis-1/12 justify-end`}
           onClick={() => {
             navigate("/cart");
           }}
         >
-          <FaShoppingBasket size={style.iconSize} />
+          <FaShoppingBasket size={30} />
         </li>
         <li
-          className={style.icon}
+          className={`${baseStyle} basis-1/12 px-2`}
           onClick={() => {
             navigate("/account");
           }}
         >
-          <MdAccountCircle size={style.iconSize} />
+          <MdAccountCircle size={30} />
         </li>
       </ul>
     </>

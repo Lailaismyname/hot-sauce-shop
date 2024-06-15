@@ -1,5 +1,7 @@
 package com.example.sauce.item;
 
+import com.example.sauce.ingredient.Ingredient;
+import com.example.sauce.ingredient.IngredientService;
 import com.example.sauce.routes.ControllerRoutes;
 import java.net.URI;
 import java.util.List;
@@ -12,14 +14,25 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @CrossOrigin(origins = {"${client}"})
 public class ItemController {
   private final ItemService itemService;
+  private final IngredientService ingredientService;
 
-  public ItemController(ItemService itemService) {
+  public ItemController(ItemService itemService, IngredientService ingredientService) {
     this.itemService = itemService;
+    this.ingredientService = ingredientService;
   }
 
   @GetMapping
-  public ResponseEntity<List<Item>> getAll() {
+  public ResponseEntity<List<Item>> getAll(
+      @RequestParam(required = false) List<String> ingredients) {
     return ResponseEntity.ok(itemService.getAll());
+  }
+
+  @GetMapping("/filter")
+  public ResponseEntity<List<Item>> getFiltered(
+      @RequestParam(required = false) List<String> ingredients) {
+    List<Ingredient> ingredientList =
+        ingredients.stream().map(ingredientService::getByName).toList();
+    return ResponseEntity.ok(itemService.getByIngredients(ingredientList));
   }
 
   @GetMapping("/id/{id}")

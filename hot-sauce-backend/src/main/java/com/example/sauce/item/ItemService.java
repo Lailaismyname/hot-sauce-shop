@@ -1,5 +1,6 @@
 package com.example.sauce.item;
 
+import com.example.sauce.ingredient.Ingredient;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,10 @@ public class ItemService {
 
   public Item getById(Long id) {
     return itemRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+  }
+
+  public List<Item> getByIngredients(List<Ingredient> ingredients) {
+    return itemRepository.findByIngredientsIn(ingredients);
   }
 
   public Item save(Item item) {

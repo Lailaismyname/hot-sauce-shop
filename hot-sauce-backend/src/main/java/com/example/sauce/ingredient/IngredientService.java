@@ -16,6 +16,10 @@ public class IngredientService {
     return ingredientRepository.findAll();
   }
 
+  public Ingredient getByName(String name) {
+    return ingredientRepository.findByNameIgnoreCase(name);
+  }
+
   public Ingredient getById(Long id) {
     return ingredientRepository.findById(id).orElseThrow(EntityNotFoundException::new);
   }

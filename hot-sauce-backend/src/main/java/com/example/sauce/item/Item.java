@@ -4,7 +4,9 @@ import com.example.sauce.cartitem.CartItem;
 import com.example.sauce.ingredient.Ingredient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,12 +30,22 @@ public class Item {
 
   private SpiceLevel spiceLevel;
 
-  @ManyToMany private Set<Ingredient> ingredients = new HashSet<>();
+  @ManyToMany private List<Ingredient> ingredients = new ArrayList<>();
 
-  public Item(String name, String description, Double price, SpiceLevel spiceLevel) {
+  public void addIngredients(List<Ingredient> newIngredients) {
+    ingredients.addAll(newIngredients);
+  }
+
+  public Item(
+      String name,
+      String description,
+      Double price,
+      SpiceLevel spiceLevel,
+      List<Ingredient> ingredients) {
     this.name = name;
     this.description = description;
     this.price = price;
     this.spiceLevel = spiceLevel;
+    this.ingredients = ingredients;
   }
 }
