@@ -2,7 +2,6 @@ package com.example.sauce.cart;
 
 import com.example.sauce.cartitem.CartItem;
 import jakarta.persistence.*;
-
 import java.util.HashSet;
 import java.util.Set;
 import lombok.Getter;
@@ -17,5 +16,7 @@ public class Cart {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @OneToMany @Setter private Set<CartItem> cartItems = new HashSet<>();
+  @OneToMany(fetch = FetchType.LAZY)
+  @Setter
+  private Set<CartItem> cartItems = new HashSet<>();
 }
