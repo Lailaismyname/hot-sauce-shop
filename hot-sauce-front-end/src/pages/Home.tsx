@@ -5,6 +5,7 @@ export const Home = () => {
     <>
       <div>
         <Navbar />
+        <p>Homepage</p>
       </div>
     </>
   );

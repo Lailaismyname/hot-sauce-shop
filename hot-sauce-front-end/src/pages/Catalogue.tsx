@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Navbar } from "../components/Navbar";
 import { ItemDisplay } from "../components/ItemDisplay";
-import { CategoryItem } from "../components/CategoryItem";
 import { CategorySection } from "../components/CategorySection";
 
 export const Catalogue = () => {
