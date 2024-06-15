@@ -28,7 +28,7 @@ public class PurchaseService {
     return purchaseRepository.save(purchase);
   }
 
-  public Purchase update(Long id, Boolean isOpen) {
+  public Purchase openOrClosePurchase(Long id, Boolean isOpen) {
     Optional<Purchase> optionalPurchase = purchaseRepository.findById(id);
     if (optionalPurchase.isEmpty())
       throw new EntityNotFoundException("Purchase of id " + id + " can not be found");

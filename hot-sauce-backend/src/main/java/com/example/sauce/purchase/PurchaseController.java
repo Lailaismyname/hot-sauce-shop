@@ -42,7 +42,7 @@ public class PurchaseController {
 
   @PutMapping("/{id}")
   public ResponseEntity<Purchase> update(@PathVariable Long id, Boolean isOpen) {
-    Purchase updatedPurchase = purchaseService.update(id, isOpen);
+    Purchase updatedPurchase = purchaseService.openOrClosePurchase(id, isOpen);
     return ResponseEntity.ok().body(updatedPurchase);
   }
 
