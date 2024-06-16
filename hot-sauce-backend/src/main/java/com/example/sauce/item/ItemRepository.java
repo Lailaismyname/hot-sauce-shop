@@ -7,5 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
-    List<Item> findByIngredientsIn(List<Ingredient> ingredients);
+  List<Item> findByIngredientsIn(List<Ingredient> ingredients);
+
+  List<Item> findBySpiceLevelIn(List<SpiceLevel> spiceLevels);
 }

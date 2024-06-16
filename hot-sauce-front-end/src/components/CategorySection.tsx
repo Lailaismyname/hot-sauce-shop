@@ -10,7 +10,7 @@ export const CategorySection: React.FC<CategoryProps> = ({
       <dt className="font-bold border-b-2 border-jalapeno">{category}</dt>
       {categoryList.map((categoryItem) => (
         <CategoryItem
-          name={categoryItem.name}
+          name={categoryItem.name.toLowerCase().replace("_", " ")}
           category={category}
           key={categoryItem.id}
           filterCategory={filterCategory}

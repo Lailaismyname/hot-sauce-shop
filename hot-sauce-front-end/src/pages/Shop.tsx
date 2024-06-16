@@ -9,11 +9,12 @@ import { Sort } from "../components/Sort";
 
 export const Shop = () => {
   const itemsBaseUrl = "http://localhost:8080/hot-sauce-shop/items";
+  const [fetchItemUrl, setFetchItemUrl] = useState(itemsBaseUrl);
+  const ingredientsUrl = "http://localhost:8080/hot-sauce-shop/ingredients";
+
   const [ingredients, setIngredients] = useState([]);
   const [items, setItems] = useState([]);
   const [appliedFilters, setAppliedFilters] = useState<string[]>([]);
-
-  const [fetchItemUrl, setFetchItemUrl] = useState(itemsBaseUrl);
 
   useEffect(() => {
     fetchItems();
@@ -21,16 +22,21 @@ export const Shop = () => {
   }, [fetchItemUrl]);
 
   const fetchItems = () => {
-    axios.get(fetchItemUrl).then((response) => {
-      setItems(response.data);
-    });
+    axios
+      .get(fetchItemUrl)
+      .then((response) => {
+        setItems(response.data);
+        console.log("items: ", response.data);
+      })
+      .catch((err) => console.error(err));
   };
   const fetchIngredients = () => {
     axios
-      .get("http://localhost:8080/hot-sauce-shop/ingredients")
+      .get(ingredientsUrl)
       .then((response) => {
         setIngredients(response.data);
-      });
+      })
+      .catch((err) => console.error(err));
   };
 
   const filterCategory: FilterCategory = (category, name, isChecked) => {
@@ -69,6 +75,17 @@ export const Shop = () => {
           <CategorySection
             category={"ingredients"}
             categoryList={ingredients}
+            filterCategory={filterCategory}
+          />
+          <CategorySection
+            category={"spice level"}
+            categoryList={[
+              { name: "ULTRA_HOT", id: 1 },
+              { name: "EXTRA_HOT", id: 2 },
+              { name: "HOT", id: 3 },
+              { name: "MEDIUM", id: 4 },
+              { name: "MILD", id: 5 },
+            ]}
             filterCategory={filterCategory}
           />
         </LeftPanel>

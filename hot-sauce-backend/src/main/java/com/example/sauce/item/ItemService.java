@@ -26,6 +26,10 @@ public class ItemService {
     return itemRepository.findByIngredientsIn(ingredients);
   }
 
+  public List<Item> getBySpiceLevel(List<SpiceLevel> spiceLevels) {
+    return itemRepository.findBySpiceLevelIn(spiceLevels);
+  }
+
   public Item save(Item item) {
     return itemRepository.save(item);
   }

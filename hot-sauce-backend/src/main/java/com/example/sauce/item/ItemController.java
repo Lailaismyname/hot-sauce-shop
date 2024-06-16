@@ -4,6 +4,7 @@ import com.example.sauce.ingredient.Ingredient;
 import com.example.sauce.ingredient.IngredientService;
 import com.example.sauce.routes.ControllerRoutes;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,10 +30,20 @@ public class ItemController {
 
   @GetMapping("/filter")
   public ResponseEntity<List<Item>> getFiltered(
-      @RequestParam(required = false) List<String> ingredients) {
+      @RequestParam(required = false) List<String> ingredients,
+      @RequestParam(required = false) List<String> spiceLevel) {
+    // klopt nog niet helemaal, maar getting there!
     List<Ingredient> ingredientList =
         ingredients.stream().map(ingredientService::getByName).toList();
-    return ResponseEntity.ok(itemService.getByIngredients(ingredientList));
+
+    List<SpiceLevel> spiceList =
+        spiceLevel.stream().map(String::toUpperCase).map(SpiceLevel::valueOf).toList();
+
+    List<Item> filteredList = new ArrayList<>();
+    filteredList.addAll(itemService.getBySpiceLevel(spiceList));
+    filteredList.addAll(itemService.getByIngredients(ingredientList));
+
+    return ResponseEntity.ok(filteredList);
   }
 
   @GetMapping("/id/{id}")
