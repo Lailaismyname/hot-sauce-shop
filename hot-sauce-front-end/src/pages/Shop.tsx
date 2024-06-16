@@ -4,7 +4,7 @@ import { Navbar } from "../components/Navbar";
 import { ItemDisplay } from "../components/ItemDisplay";
 import { CategorySection } from "../components/CategorySection";
 
-export const Catalogue = () => {
+export const Shop = () => {
   const itemsBaseUrl = "http://localhost:8080/hot-sauce-shop/items";
   const [ingredients, setIngredients] = useState([]);
   const [items, setItems] = useState([]);

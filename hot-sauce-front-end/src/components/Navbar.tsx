@@ -29,10 +29,10 @@ export const Navbar = () => {
         <li
           className={`${baseStyle} basis-2/12`}
           onClick={() => {
-            navigate("/catalogue");
+            navigate("/shop");
           }}
         >
-          Catalogue
+          Shop
         </li>
         <li
           className={`${baseStyle} basis-1/12 justify-end`}
