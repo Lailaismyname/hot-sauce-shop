@@ -15,7 +15,7 @@ export const ItemDisplay: React.FC<ItemDisplayProps> = ({
           <p className="font-bold">{price}</p>
         </div>
         <div className="flex content-center items-center">
-          <button className="border-2 text-white bg-pepper rounded-md flex place-content-between h-fit px-4 py-2 font-bold hover:bg-white hover:text-pepper hover:border-2 hover:border-pepper">
+          <button className="border-2 border-jalapeno text-jalapeno bg-white rounded-md flex place-content-between h-fit px-4 py-2 font-bold hover:bg-jalapeno hover:text-white">
             <span>Add to Cart</span>
           </button>
         </div>

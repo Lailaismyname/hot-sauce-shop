@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { Navbar } from "../components/Navbar";
 import { ItemDisplay } from "../components/ItemDisplay";
 import { CategorySection } from "../components/CategorySection";
+import { LeftPanel } from "../components/LeftPanel";
+import { RightPanel } from "../components/RightPanel";
+import { Sort } from "../components/Sort";
 
 export const Shop = () => {
   const itemsBaseUrl = "http://localhost:8080/hot-sauce-shop/items";
@@ -11,6 +14,11 @@ export const Shop = () => {
   const [appliedFilters, setAppliedFilters] = useState<string[]>([]);
 
   const [fetchItemUrl, setFetchItemUrl] = useState(itemsBaseUrl);
+
+  useEffect(() => {
+    fetchItems();
+    fetchIngredients();
+  }, [fetchItemUrl]);
 
   const fetchItems = () => {
     axios.get(fetchItemUrl).then((response) => {
@@ -52,24 +60,20 @@ export const Shop = () => {
     setFetchItemUrl(newUrl);
   };
 
-  useEffect(() => {
-    fetchItems();
-    fetchIngredients();
-  }, [fetchItemUrl]);
-
   return (
     <div>
       <Navbar />
       <div className="grid grid-cols-6 gap-2 p-8">
-        <div className="grid-cols-subgrid col-span-1 p-2">
+        <LeftPanel>
           <h3 className="text-xl">Categories</h3>
           <CategorySection
             category={"ingredients"}
             categoryList={ingredients}
             filterCategory={filterCategory}
           />
-        </div>
-        <ul className="col-span-5 grid grid-cols-3 gap-8">
+        </LeftPanel>
+        <RightPanel>
+          <Sort style={"absolute right-20 top-20"} />
           {items.map((item: Item) => (
             <ItemDisplay
               key={item.id}
@@ -78,7 +82,7 @@ export const Shop = () => {
               price={item.price}
             />
           ))}
-        </ul>
+        </RightPanel>
       </div>
     </div>
   );
