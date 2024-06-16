@@ -11,12 +11,17 @@ export default {
       },
       boxShadow: {
         "custom-shadow":
-          "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+          "0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.06)",
+        "custom-shadow-pepper":
+          "0 10px 15px -3px rgba(178, 34, 34, 0.2), 0 4px 6px -2px rgba(178, 34, 34, 0.06)",
+        "custom-shadow-jalapeno":
+          "0 10px 15px -3px rgba(63, 97, 45, 0.2), 0 4px 6px -2px rgba(63, 97, 45, 0.06)",
       },
       colors: {
         pepper: "#B22222",
         "pepper-light": "#f5cbcb",
         jalapeno: "#3F612D",
+        "jalapeno-light": "#bbd8ab",
         base: "#FFFDED",
       },
     },

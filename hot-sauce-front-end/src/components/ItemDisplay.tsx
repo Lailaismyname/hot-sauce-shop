@@ -1,4 +1,3 @@
-import { BsCartPlusFill } from "react-icons/bs";
 import { IoLogoEuro } from "react-icons/io5";
 
 export const ItemDisplay: React.FC<ItemDisplayProps> = ({
@@ -7,7 +6,7 @@ export const ItemDisplay: React.FC<ItemDisplayProps> = ({
   price,
 }) => {
   return (
-    <li className=" p-10 h-96 bg-pepper-light rounded-xl grid grid-rows-3 gap-2 shadow-custom-shadow">
+    <li className=" p-10 h-96 bg-jalapeno-light rounded-xl grid grid-rows-3 gap-2 shadow-custom-shadow-jalapeno">
       <p className="text-xl font-bold">{name}</p>
       <p>{description}</p>
       <div className="grid grid-cols-2">

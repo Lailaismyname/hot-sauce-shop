@@ -6,8 +6,8 @@ export const CategorySection: React.FC<CategoryProps> = ({
   filterCategory,
 }) => {
   return (
-    <dl className="p-2">
-      <dt>{category}</dt>
+    <dl className="p-2 capitalize">
+      <dt className="font-bold border-b-2 border-jalapeno">{category}</dt>
       {categoryList.map((categoryItem) => (
         <CategoryItem
           name={categoryItem.name}

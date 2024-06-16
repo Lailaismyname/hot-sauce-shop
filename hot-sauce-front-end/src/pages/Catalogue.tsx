@@ -8,14 +8,13 @@ export const Catalogue = () => {
   const itemsBaseUrl = "http://localhost:8080/hot-sauce-shop/items";
   const [ingredients, setIngredients] = useState([]);
   const [items, setItems] = useState([]);
-  const [appliedFilters, setAppliedFilters] = useState<String[]>([]);
+  const [appliedFilters, setAppliedFilters] = useState<string[]>([]);
 
   const [fetchItemUrl, setFetchItemUrl] = useState(itemsBaseUrl);
 
   const fetchItems = () => {
     axios.get(fetchItemUrl).then((response) => {
       setItems(response.data);
-      //console.log("Items: ", response.data);
     });
   };
   const fetchIngredients = () => {
@@ -23,35 +22,39 @@ export const Catalogue = () => {
       .get("http://localhost:8080/hot-sauce-shop/ingredients")
       .then((response) => {
         setIngredients(response.data);
-        //console.log("Ingredients: ", response.data);
       });
   };
 
   const filterCategory: FilterCategory = (category, name, isChecked) => {
     if (isChecked) {
-      const existingFilters = appliedFilters;
-      const newFilter = `${category}=${name}`;
-      appliedFilters.push(newFilter);
-      setAppliedFilters(existingFilters);
-      let newUrl = itemsBaseUrl + "/filter?";
-      appliedFilters.forEach((filter) => (newUrl += filter + "&"));
-      setFetchItemUrl(newUrl);
+      setAppliedFilters((prevFilters) => {
+        const newFilter = `${category}=${name}`;
+        const updatedFilters = [...prevFilters, newFilter];
+        createNewUrl(updatedFilters);
+        return updatedFilters;
+      });
     } else {
-      // bij het verwijderen loopt ie achter!
       const removedFilter = `${category}=${name}`;
-      setAppliedFilters((prev) =>
-        prev.filter((filter) => filter !== removedFilter),
-      );
-      let newUrl = itemsBaseUrl + "/filter?";
-      appliedFilters.forEach((filter) => (newUrl += filter + "&"));
-      setFetchItemUrl(newUrl);
+      setAppliedFilters((prevFilters) => {
+        const updatedFilters = prevFilters.filter(
+          (filter) => filter !== removedFilter,
+        );
+        createNewUrl(updatedFilters);
+        return updatedFilters;
+      });
     }
+  };
+
+  const createNewUrl: CreateNewUrl = (filterList) => {
+    let newUrl =
+      filterList.length <= 0 ? itemsBaseUrl : itemsBaseUrl + "/filter?";
+    filterList.forEach((filter) => (newUrl += filter + "&"));
+    setFetchItemUrl(newUrl);
   };
 
   useEffect(() => {
     fetchItems();
     fetchIngredients();
-    console.log("running");
   }, [fetchItemUrl]);
 
   return (
@@ -91,4 +94,8 @@ interface Item {
 
 interface FilterCategory {
   (category: string, name: string, isChecked: boolean): void;
+}
+
+interface CreateNewUrl {
+  (filterList: string[]): void;
 }
