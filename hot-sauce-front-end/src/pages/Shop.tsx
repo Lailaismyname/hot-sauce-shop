@@ -60,8 +60,7 @@ export const Shop = () => {
   };
 
   const createNewUrl: CreateNewUrl = (filterList) => {
-    let newUrl =
-      filterList.length <= 0 ? itemsBaseUrl : itemsBaseUrl + "/filter?";
+    let newUrl = filterList.length <= 0 ? itemsBaseUrl : itemsBaseUrl + "?";
     filterList.forEach((filter) => (newUrl += filter + "&"));
     setFetchItemUrl(newUrl);
   };

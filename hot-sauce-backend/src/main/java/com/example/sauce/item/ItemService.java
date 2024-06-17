@@ -1,17 +1,21 @@
 package com.example.sauce.item;
 
 import com.example.sauce.ingredient.Ingredient;
+import com.example.sauce.ingredient.IngredientService;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ItemService {
   private final ItemRepository itemRepository;
+  private final IngredientService ingredientService;
 
-  public ItemService(ItemRepository itemRepository) {
+  public ItemService(ItemRepository itemRepository, IngredientService ingredientService) {
     this.itemRepository = itemRepository;
+    this.ingredientService = ingredientService;
   }
 
   public List<Item> getAll() {
@@ -22,12 +26,21 @@ public class ItemService {
     return itemRepository.findById(id).orElseThrow(EntityNotFoundException::new);
   }
 
-  public List<Item> getByIngredients(List<Ingredient> ingredients) {
-    return itemRepository.findByIngredientsIn(ingredients);
+  public List<Item> getByIngredients(List<String> ingredients) {
+    // string to ingredient
+    List<Ingredient> ingredientList =
+        ingredients.stream().map(ingredientService::getByName).collect(Collectors.toList());
+    ;
+    return itemRepository.findByIngredientsIn(ingredientList);
   }
 
-  public List<Item> getBySpiceLevel(List<SpiceLevel> spiceLevels) {
-    return itemRepository.findBySpiceLevelIn(spiceLevels);
+  public List<Item> getBySpiceLevel(List<String> spiceLevels) {
+    // convert spicelevel list of Enum
+    List<SpiceLevel> spiceLevelList =
+        spiceLevels.stream()
+            .map(spiceLevel -> SpiceLevel.valueOf(spiceLevel.toUpperCase()))
+            .toList();
+    return itemRepository.findBySpiceLevelIn(spiceLevelList);
   }
 
   public Item save(Item item) {

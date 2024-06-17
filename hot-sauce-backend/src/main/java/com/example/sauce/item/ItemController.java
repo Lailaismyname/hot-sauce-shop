@@ -1,11 +1,12 @@
 package com.example.sauce.item;
 
-import com.example.sauce.ingredient.Ingredient;
 import com.example.sauce.ingredient.IngredientService;
 import com.example.sauce.routes.ControllerRoutes;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -24,26 +25,26 @@ public class ItemController {
 
   @GetMapping
   public ResponseEntity<List<Item>> getAll(
-      @RequestParam(required = false) List<String> ingredients) {
-    return ResponseEntity.ok(itemService.getAll());
-  }
-
-  @GetMapping("/filter")
-  public ResponseEntity<List<Item>> getFiltered(
       @RequestParam(required = false) List<String> ingredients,
-      @RequestParam(required = false) List<String> spiceLevel) {
-    // klopt nog niet helemaal, maar getting there!
-    List<Ingredient> ingredientList =
-        ingredients.stream().map(ingredientService::getByName).toList();
+      @RequestParam(required = false) List<String> spiceLevels) {
+    // if no query parameters are provided, return all.
+    if (ingredients == null && spiceLevels == null) return ResponseEntity.ok(itemService.getAll());
 
-    List<SpiceLevel> spiceList =
-        spiceLevel.stream().map(String::toUpperCase).map(SpiceLevel::valueOf).toList();
+    Set<Item> items = new HashSet<>();
 
-    List<Item> filteredList = new ArrayList<>();
-    filteredList.addAll(itemService.getBySpiceLevel(spiceList));
-    filteredList.addAll(itemService.getByIngredients(ingredientList));
+    if (ingredients != null) {
+      List<Item> filteredItems = itemService.getByIngredients(ingredients);
+      items.addAll(filteredItems);
+    }
 
-    return ResponseEntity.ok(filteredList);
+    if (spiceLevels != null) {
+      List<Item> filteredItems = itemService.getBySpiceLevel(spiceLevels);
+      items.addAll(filteredItems);
+      // bijna nu filter voeg ik alles toe wat voldoet aan de filter. Maar ik moet ook nog de items
+      // weg filteren die niet aan alle 2 de eisen voldoen
+    }
+
+    return ResponseEntity.ok(new ArrayList<>(items));
   }
 
   @GetMapping("/id/{id}")
