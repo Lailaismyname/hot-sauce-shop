@@ -34,13 +34,10 @@ public class ItemService {
     return itemRepository.findByIngredientsIn(ingredientList);
   }
 
-  public List<Item> getBySpiceLevel(List<String> spiceLevels) {
-    // convert spicelevel list of Enum
-    List<SpiceLevel> spiceLevelList =
-        spiceLevels.stream()
-            .map(spiceLevel -> SpiceLevel.valueOf(spiceLevel.toUpperCase()))
-            .toList();
-    return itemRepository.findBySpiceLevelIn(spiceLevelList);
+  public List<Item> getByHeatLevel(String heatlevel) {
+    return getAll().stream()
+        .filter(item -> item.getHeatLevel() == HeatLevel.valueOf(heatlevel.toUpperCase()))
+        .toList();
   }
 
   public Item save(Item item) {

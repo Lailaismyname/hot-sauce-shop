@@ -5,9 +5,9 @@ import com.example.sauce.cart.CartService;
 import com.example.sauce.cartitem.CartItemService;
 import com.example.sauce.ingredient.Ingredient;
 import com.example.sauce.ingredient.IngredientService;
+import com.example.sauce.item.HeatLevel;
 import com.example.sauce.item.Item;
 import com.example.sauce.item.ItemService;
-import com.example.sauce.item.SpiceLevel;
 import com.example.sauce.purchase.PurchaseService;
 import com.example.sauce.purchaseitem.PurchaseItemService;
 import java.util.ArrayList;
@@ -87,7 +87,7 @@ public class Seeder implements CommandLineRunner {
             "Sriracha",
             "The classic spicy and tangy Sriracha sauce with a kick of garlic.",
             7.99,
-            SpiceLevel.HOT,
+            HeatLevel.HOT,
             getIngredientsByName(ingredients, List.of("chili", "garlic"))));
 
     itemService.save(
@@ -95,7 +95,7 @@ public class Seeder implements CommandLineRunner {
             "Gochujang",
             "A Korean fermented chili paste with a sweet and spicy flavor profile.",
             9.99,
-            SpiceLevel.MEDIUM,
+            HeatLevel.MEDIUM,
             getIngredientsByName(ingredients, List.of("chili", "garlic", "molasses"))));
 
     itemService.save(
@@ -103,7 +103,7 @@ public class Seeder implements CommandLineRunner {
             "Dragon's Breath",
             "A fiery hot sauce with a mix of ghost peppers and habaneros.",
             12.99,
-            SpiceLevel.EXTRA_HOT,
+            HeatLevel.EXTRA_HOT,
             getIngredientsByName(ingredients, List.of("ghost pepper", "habanero"))));
 
     itemService.save(
@@ -111,7 +111,7 @@ public class Seeder implements CommandLineRunner {
             "Inferno Blaze",
             "A scorching blend of Carolina Reaper and scorpion peppers.",
             15.99,
-            SpiceLevel.ULTRA_HOT,
+            HeatLevel.ULTRA_HOT,
             getIngredientsByName(ingredients, List.of("carolina reaper", "scorpion pepper"))));
 
     itemService.save(
@@ -119,7 +119,7 @@ public class Seeder implements CommandLineRunner {
             "Tropical Heat",
             "A sweet and spicy sauce with mango, pineapple, and habaneros.",
             10.99,
-            SpiceLevel.HOT,
+            HeatLevel.HOT,
             getIngredientsByName(ingredients, List.of("mango", "pineapple", "habanero"))));
 
     itemService.save(
@@ -127,7 +127,7 @@ public class Seeder implements CommandLineRunner {
             "Smokin' Chipotle",
             "A rich and smoky sauce with chipotle peppers and adobo spices.",
             8.99,
-            SpiceLevel.MEDIUM,
+            HeatLevel.MEDIUM,
             getIngredientsByName(ingredients, List.of("chipotle", "adobo spice"))));
 
     itemService.save(
@@ -135,7 +135,7 @@ public class Seeder implements CommandLineRunner {
             "Garlic Fury",
             "A bold and zesty sauce with roasted garlic and cayenne peppers.",
             9.99,
-            SpiceLevel.MILD,
+            HeatLevel.MILD,
             getIngredientsByName(ingredients, List.of("garlic", "cayenne"))));
 
     itemService.save(
@@ -143,7 +143,7 @@ public class Seeder implements CommandLineRunner {
             "Habanero Havoc",
             "A tangy and spicy sauce featuring fresh habanero peppers.",
             11.99,
-            SpiceLevel.HOT,
+            HeatLevel.HOT,
             getIngredientsByName(ingredients, List.of("habanero"))));
 
     itemService.save(
@@ -151,7 +151,7 @@ public class Seeder implements CommandLineRunner {
             "Jalapeño Joy",
             "A mild and flavorful sauce with green jalapeños and cilantro.",
             7.99,
-            SpiceLevel.MILD,
+            HeatLevel.MILD,
             getIngredientsByName(ingredients, List.of("jalapeno", "cilantro"))));
 
     itemService.save(
@@ -159,7 +159,7 @@ public class Seeder implements CommandLineRunner {
             "Ghostly Grin",
             "An intense sauce with ghost peppers and a hint of lime.",
             13.99,
-            SpiceLevel.EXTRA_HOT,
+            HeatLevel.EXTRA_HOT,
             getIngredientsByName(ingredients, List.of("ghost pepper", "lime"))));
 
     itemService.save(
@@ -167,7 +167,7 @@ public class Seeder implements CommandLineRunner {
             "Caribbean Crush",
             "A tropical sauce with scotch bonnet peppers and island spices.",
             10.99,
-            SpiceLevel.HOT,
+            HeatLevel.HOT,
             getIngredientsByName(ingredients, List.of("bonnet pepper", "madame jeanette"))));
 
     itemService.save(
@@ -175,7 +175,7 @@ public class Seeder implements CommandLineRunner {
             "Smoky Bourbon",
             "A rich and smoky sauce with bourbon, molasses, and chipotle peppers.",
             14.99,
-            SpiceLevel.ULTRA_HOT,
+            HeatLevel.ULTRA_HOT,
             getIngredientsByName(ingredients, List.of("bourbon", "molasses", "chipotle"))));
 
     itemService.save(
@@ -183,7 +183,7 @@ public class Seeder implements CommandLineRunner {
             "Laila's super spice and everything nice",
             "Very sweet and spicy hot sauce, the recipe has been a secret for age and will remain as such.",
             127.99,
-            SpiceLevel.HOT,
+            HeatLevel.HOT,
             getIngredientsByName(
                 ingredients, List.of("habanero", "mango", "pineapple", "adobo spice"))));
   }

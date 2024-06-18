@@ -28,7 +28,7 @@ public class Item {
   @JsonIgnore
   private Set<CartItem> cartItems = new HashSet<>();
 
-  private SpiceLevel spiceLevel;
+  private HeatLevel heatLevel;
 
   @ManyToMany private List<Ingredient> ingredients = new ArrayList<>();
 
@@ -40,12 +40,12 @@ public class Item {
       String name,
       String description,
       Double price,
-      SpiceLevel spiceLevel,
+      HeatLevel heatLevel,
       List<Ingredient> ingredients) {
     this.name = name;
     this.description = description;
     this.price = price;
-    this.spiceLevel = spiceLevel;
+    this.heatLevel = heatLevel;
     this.ingredients = ingredients;
   }
 }

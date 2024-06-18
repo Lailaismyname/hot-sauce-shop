@@ -1,6 +1,6 @@
 package com.example.sauce.item;
 
-public enum SpiceLevel {
+public enum HeatLevel {
   ULTRA_HOT,
   EXTRA_HOT,
   HOT,

@@ -16,19 +16,20 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @CrossOrigin(origins = {"${client}"})
 public class ItemController {
   private final ItemService itemService;
-  private final IngredientService ingredientService;
 
   public ItemController(ItemService itemService, IngredientService ingredientService) {
     this.itemService = itemService;
-    this.ingredientService = ingredientService;
   }
 
   @GetMapping
   public ResponseEntity<List<Item>> getAll(
       @RequestParam(required = false) List<String> ingredients,
-      @RequestParam(required = false) List<String> spiceLevels) {
-    // if no query parameters are provided, return all.
-    if (ingredients == null && spiceLevels == null) return ResponseEntity.ok(itemService.getAll());
+      @RequestParam(required = false)
+          List<String> heatlevel) // case sensitive!! ook in de url als query param
+      {
+    // TODO als nu filtered het en op ingredient en op heatlevel dan laat ie beide zien, maar de
+    // filter moet alleen dingen zien de aan beide filters voldoen
+    if (ingredients == null && heatlevel == null) return ResponseEntity.ok(itemService.getAll());
 
     Set<Item> items = new HashSet<>();
 
@@ -37,11 +38,10 @@ public class ItemController {
       items.addAll(filteredItems);
     }
 
-    if (spiceLevels != null) {
-      List<Item> filteredItems = itemService.getBySpiceLevel(spiceLevels);
+    if (heatlevel != null) {
+      List<Item> filteredItems = new ArrayList<>();
+      heatlevel.forEach(spiceLevel -> filteredItems.addAll(itemService.getByHeatLevel(spiceLevel)));
       items.addAll(filteredItems);
-      // bijna nu filter voeg ik alles toe wat voldoet aan de filter. Maar ik moet ook nog de items
-      // weg filteren die niet aan alle 2 de eisen voldoen
     }
 
     return ResponseEntity.ok(new ArrayList<>(items));
