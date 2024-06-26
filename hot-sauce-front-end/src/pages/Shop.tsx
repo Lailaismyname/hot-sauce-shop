@@ -8,22 +8,35 @@ import { RightPanel } from "../components/RightPanel";
 import { Sort } from "../components/Sort";
 
 export const Shop = () => {
-  const itemsBaseUrl = "http://localhost:8080/hot-sauce-shop/items";
-  const [fetchItemUrl, setFetchItemUrl] = useState(itemsBaseUrl);
   const ingredientsUrl = "http://localhost:8080/hot-sauce-shop/ingredients";
 
-  const [ingredients, setIngredients] = useState([]);
+  const [availableIngredients, setAvailableIngredients] = useState([]);
   const [items, setItems] = useState([]);
-  const [appliedFilters, setAppliedFilters] = useState<string[]>([]);
+
+  const [params, setParams] = useState({});
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
+  const [selectedHeatLevels, setSelectedHeatLevels] = useState([]);
+  const [selectedMinPrice, setSelectedMinPrice] = useState(Number);
+  const [selectedMaxPrice, setSelectedMaxPrice] = useState(Number);
 
   useEffect(() => {
     fetchItems();
     fetchIngredients();
-  }, [fetchItemUrl]);
+  }, [params]);
+
+  useEffect(() => {
+    buildParams();
+  }, [
+    selectedHeatLevels,
+    selectedIngredients,
+    selectedMinPrice,
+    selectedMaxPrice,
+  ]);
 
   const fetchItems = () => {
+    console.log("params: ", params);
     axios
-      .get(fetchItemUrl)
+      .get("http://localhost:8080/hot-sauce-shop/items", { params })
       .then((response) => {
         setItems(response.data);
         console.log("items: ", response.data);
@@ -34,35 +47,47 @@ export const Shop = () => {
     axios
       .get(ingredientsUrl)
       .then((response) => {
-        setIngredients(response.data);
+        setAvailableIngredients(response.data);
       })
       .catch((err) => console.error(err));
   };
 
-  const filterCategory: FilterCategory = (category, name, isChecked) => {
-    if (isChecked) {
-      setAppliedFilters((prevFilters) => {
-        const newFilter = `${category}=${name}`;
-        const updatedFilters = [...prevFilters, newFilter];
-        createNewUrl(updatedFilters);
-        return updatedFilters;
-      });
-    } else {
-      const removedFilter = `${category}=${name}`;
-      setAppliedFilters((prevFilters) => {
-        const updatedFilters = prevFilters.filter(
-          (filter) => filter !== removedFilter,
-        );
-        createNewUrl(updatedFilters);
-        return updatedFilters;
-      });
+  const buildParams = () => {
+    const newParams = {};
+
+    if (selectedIngredients.length > 0) {
+      newParams.ingredients = selectedIngredients.join(",");
     }
+
+    if (selectedHeatLevels.length > 0) {
+      newParams.heatlevel = selectedHeatLevels.join(",");
+    }
+
+    setParams(newParams);
   };
 
-  const createNewUrl: CreateNewUrl = (filterList) => {
-    let newUrl = filterList.length <= 0 ? itemsBaseUrl : itemsBaseUrl + "?";
-    filterList.forEach((filter) => (newUrl += filter + "&"));
-    setFetchItemUrl(newUrl);
+  const filterCategory = (category, name, isChecked) => {
+    if (category === "ingredients") {
+      setSelectedIngredients((prevIngredients) => {
+        if (isChecked) {
+          return [...prevIngredients, name];
+        } else {
+          return prevIngredients.filter((ingredient) => ingredient !== name);
+        }
+      });
+    }
+
+    if (category === "spice level") {
+      setSelectedHeatLevels((prevHeatLevels) => {
+        if (isChecked) {
+          return [...prevHeatLevels, name.replace(" ", "_")];
+        } else {
+          return prevHeatLevels.filter(
+            (level) => level !== name.replace("_", " "),
+          );
+        }
+      });
+    }
   };
 
   return (
@@ -73,7 +98,7 @@ export const Shop = () => {
           <h3 className="text-xl">Categories</h3>
           <CategorySection
             category={"ingredients"}
-            categoryList={ingredients}
+            categoryList={availableIngredients}
             filterCategory={filterCategory}
           />
           <CategorySection
@@ -110,12 +135,4 @@ interface Item {
   name: String;
   description: String;
   price: number;
-}
-
-interface FilterCategory {
-  (category: string, name: string, isChecked: boolean): void;
-}
-
-interface CreateNewUrl {
-  (filterList: string[]): void;
 }

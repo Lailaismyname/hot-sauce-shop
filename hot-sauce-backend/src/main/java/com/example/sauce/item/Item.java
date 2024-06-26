@@ -28,7 +28,7 @@ public class Item {
   @JsonIgnore
   private Set<CartItem> cartItems = new HashSet<>();
 
-  private HeatLevel heatLevel;
+  @Setter private HeatLevel heatLevel;
 
   @ManyToMany private List<Ingredient> ingredients = new ArrayList<>();
 

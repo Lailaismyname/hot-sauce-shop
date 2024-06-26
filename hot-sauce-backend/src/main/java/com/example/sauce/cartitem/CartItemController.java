@@ -22,7 +22,7 @@ public class CartItemController {
     return ResponseEntity.ok(cartItemService.getAll());
   }
 
-  @GetMapping("/id/{id}")
+  @GetMapping("/{id}")
   public ResponseEntity<CartItem> getById(@PathVariable Long id) {
     return ResponseEntity.ok(cartItemService.getById(id));
   }

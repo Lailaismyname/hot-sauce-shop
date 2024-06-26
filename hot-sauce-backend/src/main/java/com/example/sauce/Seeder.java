@@ -7,6 +7,7 @@ import com.example.sauce.ingredient.Ingredient;
 import com.example.sauce.ingredient.IngredientService;
 import com.example.sauce.item.HeatLevel;
 import com.example.sauce.item.Item;
+import com.example.sauce.item.ItemRepository;
 import com.example.sauce.item.ItemService;
 import com.example.sauce.purchase.PurchaseService;
 import com.example.sauce.purchaseitem.PurchaseItemService;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Component;
 public class Seeder implements CommandLineRunner {
   private final CartService cartService;
   private final ItemService itemService;
+  private final ItemRepository itemRepository;
   private final CartItemService cartItemService;
   private final PurchaseItemService purchaseItemService;
   private final PurchaseService purchaseService;
@@ -28,12 +30,14 @@ public class Seeder implements CommandLineRunner {
   public Seeder(
       CartService cartService,
       ItemService itemService,
+      ItemRepository itemRepository,
       CartItemService cartItemService,
       PurchaseItemService purchaseItemService,
       PurchaseService purchaseService,
       IngredientService ingredientService) {
     this.cartService = cartService;
     this.itemService = itemService;
+    this.itemRepository = itemRepository;
     this.cartItemService = cartItemService;
     this.purchaseItemService = purchaseItemService;
     this.purchaseService = purchaseService;
@@ -78,7 +82,7 @@ public class Seeder implements CommandLineRunner {
   }
 
   private void seedItems() {
-    if (!itemService.getAll().isEmpty()) return;
+    if (!itemRepository.findAll().isEmpty()) return;
 
     List<Ingredient> ingredients = ingredientService.getAll();
 
@@ -202,7 +206,7 @@ public class Seeder implements CommandLineRunner {
   private void seedCartItems() {
     if (!cartItemService.getAll().isEmpty()) return;
 
-    List<Item> items = itemService.getAll();
+    List<Item> items = itemRepository.findAll();
     Random random = new Random();
     for (Item item : items) {
       cartItemService.save(random.nextInt(100), item.getId());
@@ -220,7 +224,7 @@ public class Seeder implements CommandLineRunner {
   private void seedPurchaseItems() {
     if (!purchaseItemService.getAll().isEmpty()) return;
 
-    List<Item> items = itemService.getAll();
+    List<Item> items = itemRepository.findAll();
     Random random = new Random();
     for (Item item : items) {
       purchaseItemService.save(random.nextInt(100), item.getId());

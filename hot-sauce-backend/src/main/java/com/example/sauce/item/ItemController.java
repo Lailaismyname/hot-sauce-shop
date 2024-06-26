@@ -3,10 +3,7 @@ package com.example.sauce.item;
 import com.example.sauce.ingredient.IngredientService;
 import com.example.sauce.routes.ControllerRoutes;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -24,30 +21,14 @@ public class ItemController {
   @GetMapping
   public ResponseEntity<List<Item>> getAll(
       @RequestParam(required = false) List<String> ingredients,
-      @RequestParam(required = false)
-          List<String> heatlevel) // case sensitive!! ook in de url als query param
-      {
-    // TODO als nu filtered het en op ingredient en op heatlevel dan laat ie beide zien, maar de
-    // filter moet alleen dingen zien de aan beide filters voldoen
-    if (ingredients == null && heatlevel == null) return ResponseEntity.ok(itemService.getAll());
-
-    Set<Item> items = new HashSet<>();
-
-    if (ingredients != null) {
-      List<Item> filteredItems = itemService.getByIngredients(ingredients);
-      items.addAll(filteredItems);
-    }
-
-    if (heatlevel != null) {
-      List<Item> filteredItems = new ArrayList<>();
-      heatlevel.forEach(spiceLevel -> filteredItems.addAll(itemService.getByHeatLevel(spiceLevel)));
-      items.addAll(filteredItems);
-    }
-
-    return ResponseEntity.ok(new ArrayList<>(items));
+      @RequestParam(required = false, name = "heatlevel") List<String> heatLevels,
+      @RequestParam(required = false) Double min,
+      @RequestParam(required = false) Double max) {
+    // case sensitive!! ook in de url als query param
+    return ResponseEntity.ok(itemService.getAll(ingredients, heatLevels, min, max));
   }
 
-  @GetMapping("/id/{id}")
+  @GetMapping("/{id}")
   public ResponseEntity<Item> getById(@PathVariable Long id) {
     return ResponseEntity.ok(itemService.getById(id));
   }
@@ -76,5 +57,9 @@ public class ItemController {
     return ResponseEntity.ok().build();
   }
 
-  // TODO Patch
+  @PatchMapping("/{id}")
+  public ResponseEntity<Item> patch(@PathVariable Long id, @RequestBody Item item) {
+    itemService.patch(id, item);
+    return ResponseEntity.noContent().build();
+  }
 }

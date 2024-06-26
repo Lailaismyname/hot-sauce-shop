@@ -23,7 +23,7 @@ public class PurchaseController {
     return ResponseEntity.ok(purchases);
   }
 
-  @GetMapping("{id}")
+  @GetMapping("/{id}")
   public ResponseEntity<Purchase> getById(@PathVariable Long id) {
     Purchase purchase = purchaseService.getById(id);
     return ResponseEntity.ok(purchase);
