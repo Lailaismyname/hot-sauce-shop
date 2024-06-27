@@ -6,6 +6,7 @@ import { CategorySection } from "../components/CategorySection";
 import { LeftPanel } from "../components/LeftPanel";
 import { RightPanel } from "../components/RightPanel";
 import { Sort } from "../components/Sort";
+import { Pricefilter } from "../components/Pricefilter";
 
 export const Shop = () => {
   const ingredientsUrl = "http://localhost:8080/hot-sauce-shop/ingredients";
@@ -63,6 +64,14 @@ export const Shop = () => {
       newParams.heatlevel = selectedHeatLevels.join(",");
     }
 
+    if (selectedMinPrice > 0 && selectedMinPrice < 1000) {
+      newParams.min = selectedMinPrice;
+    }
+
+    if (selectedMaxPrice > 0 && selectedMaxPrice < 1000) {
+      newParams.max = selectedMaxPrice;
+    }
+
     setParams(newParams);
   };
 
@@ -90,11 +99,24 @@ export const Shop = () => {
     }
   };
 
+  const addPriceFilter = (label, minmax) => {
+    if (label == "min") {
+      setSelectedMinPrice(minmax);
+    } else if (label == "max") {
+      setSelectedMaxPrice(minmax);
+    } else {
+      console.error(
+        "Something went wrong, addPriceFilter did not receive a min or a max value.",
+      );
+    }
+  };
+
   return (
     <div>
       <Navbar />
       <div className="grid grid-cols-6 gap-2 p-8">
         <LeftPanel>
+          <Pricefilter addPriceFilter={addPriceFilter} />
           <h3 className="text-xl">Categories</h3>
           <CategorySection
             category={"ingredients"}
