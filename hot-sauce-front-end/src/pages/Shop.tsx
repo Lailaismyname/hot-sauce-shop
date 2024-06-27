@@ -116,7 +116,6 @@ export const Shop = () => {
       <Navbar />
       <div className="grid grid-cols-6 gap-2 p-8">
         <LeftPanel>
-          <Pricefilter addPriceFilter={addPriceFilter} />
           <h3 className="text-xl">Categories</h3>
           <CategorySection
             category={"ingredients"}
@@ -134,6 +133,7 @@ export const Shop = () => {
             ]}
             filterCategory={filterCategory}
           />
+          <Pricefilter addPriceFilter={addPriceFilter} />
         </LeftPanel>
         <RightPanel>
           <Sort style={"absolute right-20 top-20"} />

@@ -11,7 +11,9 @@ public class ItemSpecification {
     return (root, query, criteriaBuilder) -> {
       // omdat het een List betreft in de entiteit moet je een join toevoegen
       Join<Item, Ingredient> ingredientJoin = root.join("ingredients");
-      CriteriaBuilder.In<Ingredient> inClause = criteriaBuilder.in(ingredientJoin);
+      CriteriaBuilder.In<Ingredient> inClause =
+          criteriaBuilder.in(
+              ingredientJoin); // inClause was om met de for loop door de lijst te kunnen loopen
       for (Ingredient ingredient : ingredients) {
         inClause.value(ingredient);
       }

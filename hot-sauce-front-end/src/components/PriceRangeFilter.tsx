@@ -14,10 +14,12 @@ export const PriceRangeFilter = ({
   }, [amount]);
 
   return (
-    <div>
-      <label htmlFor={label}>{label}</label>
+    <div className="flex items-center justify-between">
+      <label className="capitalize" htmlFor={label}>
+        {label}
+      </label>
       <input
-        className="border-2"
+        className="border-2 px-2 rounded-md m-2 w-1/3"
         type="number"
         value={amount}
         onChange={(e) => {
