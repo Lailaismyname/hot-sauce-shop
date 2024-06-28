@@ -20,8 +20,10 @@ export default {
       colors: {
         pepper: "#B22222",
         "pepper-light": "#f5cbcb",
+        "pepper-dark": "#811919",
         jalapeno: "#3F612D",
         "jalapeno-light": "#bbd8ab",
+        "jalapeno-dark": "#345025",
         base: "#FFFDED",
       },
     },

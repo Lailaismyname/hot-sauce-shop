@@ -1,4 +1,4 @@
-import { CategoryItem } from "./CategoryItem";
+import { CategoryItem } from "../shopcomponents/CategoryItem";
 
 export const CategorySection: React.FC<CategoryProps> = ({
   category,

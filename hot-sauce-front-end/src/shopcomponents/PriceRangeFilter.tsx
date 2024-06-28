@@ -23,8 +23,8 @@ export const PriceRangeFilter = ({
         type="number"
         value={amount}
         onChange={(e) => {
-          if (Number(e.target.value) < 0 || Number(e.target.value) > 1000) {
-            console.error("amount must be between 0 and 1000");
+          if (Number(e.target.value) < 0 || Number(e.target.value) > 200) {
+            console.error("amount must be between 0 and 200");
           } else {
             setAmount(Number(e.target.value));
           }

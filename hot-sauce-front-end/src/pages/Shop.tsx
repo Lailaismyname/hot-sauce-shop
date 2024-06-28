@@ -1,16 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Navbar } from "../components/Navbar";
-import { ItemDisplay } from "../components/ItemDisplay";
-import { CategorySection } from "../components/CategorySection";
-import { LeftPanel } from "../components/LeftPanel";
-import { RightPanel } from "../components/RightPanel";
-import { Sort } from "../components/Sort";
-import { Pricefilter } from "../components/Pricefilter";
+import { Navbar } from "../genericcomponents/Navbar";
+import { ItemDisplay } from "../shopcomponents/ItemDisplay";
+import { CategorySection } from "../genericcomponents/CategorySection";
+import { LeftPanel } from "../genericcomponents/LeftPanel";
+import { RightPanel } from "../genericcomponents/RightPanel";
+import { Sort } from "../shopcomponents/Sort";
+import { Pricefilter } from "../shopcomponents/Pricefilter";
 
 export const Shop = () => {
-  const ingredientsUrl = "http://localhost:8080/hot-sauce-shop/ingredients";
-
   const [availableIngredients, setAvailableIngredients] = useState([]);
   const [items, setItems] = useState([]);
 
@@ -35,18 +33,18 @@ export const Shop = () => {
   ]);
 
   const fetchItems = () => {
-    console.log("params: ", params);
+    //console.log("params: ", params);
     axios
       .get("http://localhost:8080/hot-sauce-shop/items", { params })
       .then((response) => {
         setItems(response.data);
-        console.log("items: ", response.data);
+        //console.log("items: ", response.data);
       })
       .catch((err) => console.error(err));
   };
   const fetchIngredients = () => {
     axios
-      .get(ingredientsUrl)
+      .get("http://localhost:8080/hot-sauce-shop/ingredients")
       .then((response) => {
         setAvailableIngredients(response.data);
       })
@@ -92,7 +90,7 @@ export const Shop = () => {
           return [...prevHeatLevels, name.replace(" ", "_")];
         } else {
           return prevHeatLevels.filter(
-            (level) => level !== name.replace("_", " "),
+            (level) => level !== name.replace(" ", "_"),
           );
         }
       });
