@@ -15,7 +15,7 @@ export default {
         "custom-shadow-pepper":
           "0 10px 15px -3px rgba(178, 34, 34, 0.2), 0 4px 6px -2px rgba(178, 34, 34, 0.06)",
         "custom-shadow-jalapeno":
-          "0 10px 15px -3px rgba(63, 97, 45, 0.2), 0 4px 6px -2px rgba(63, 97, 45, 0.06)",
+          "1px 10px 15px 3px rgba(63, 97, 45, 0.2), 1px 4px 6px 2px rgba(63, 97, 45, 0.06)",
       },
       colors: {
         pepper: "#B22222",
